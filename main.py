@@ -23,20 +23,20 @@ kalman_filter.transitionMatrix = np.array(
     [[1, 0, 1, 0],
     [0, 1, 0, 1],
     [0, 0, 1, 0],
-    [0, 0, 0, 1]], np.float32)
+    [0, 0, 0, 1]], dtype=np.float32)
 
 # Matriz de medida. Solo se nos da informacion de la posicion x y y
 kalman_filter.measurementMatrix = np.array(
     [[1, 0, 0, 0],
-    [0, 1, 0, 0]], np.float32)
+    [0, 1, 0, 0]], dtype=np.float32)
 
 # Matriz de ruido en el proceso. Se asume poco ruido independiente en
 # cada variable
 kalman_filter.processNoiseCov = np.eye(4, dtype=np.float32)*0.3
 # Matriz de ruido para la medicion
-kalman_filter.measurementNoiseCov = np.eye(2, dtype=np.float32)*0.1 
+kalman_filter.measurementNoiseCov = np.eye(2, dtype=np.float32)*0.1
 # Matriz de covarianza para el error
-kalman_filter.errorCovPost = np.eye(4)
+kalman_filter.errorCovPost = np.eye(4, dtype=np.float32)
 
 # Estado inicial del filtro de Kalman. Se asume que la cara esta en 
 # el centro de la imagen
@@ -52,13 +52,18 @@ for frame in imgs_paths:
     
     # Se usa el filtro de kalman para predecir el siguiente estado y se
     # guardan las coordenadas
-    
+    prediccion = kalman_filter.predict()
+    x_predict = int(prediccion[0])
+    y_predict = int(prediccion[1])
+
     # Se corrige la prediccion con la medicion obtenida
     kalman_filter.correct(np.array([mid_point[0], mid_point[1]], dtype=np.float32))
     
-    # Se muestra la posicion corregida
-    # Posicion corregida en rojo
-    cv2.circle(img, mid_point, 10, (0, 0, 255), 2)  
+    # Se muestra la posicion corregida y la predecida
+    # Posicion predicha en rojo
+    cv2.circle(img, (y_predict, x_predict), 10, (0, 0, 255), 2)  
+    # Posicion corregida en verde
+    cv2.circle(img, mid_point, 10, (0, 255, 0), 2)  
     
     # Creamos la ROI sobre la imagen y marcamos el centro
     cv2.rectangle(img, top_left, bottom_right, (0, 255, 0), 4)
