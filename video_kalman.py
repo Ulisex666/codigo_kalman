@@ -6,6 +6,13 @@ from skin_face_detection import get_face_roi
 video_path = 'video_prueba.mp4'
 cap = cv2.VideoCapture(video_path)
 
+frame_width = int(cap.get(cv2.CAP_PROP_FRAME_WIDTH))
+frame_height = int(cap.get(cv2.CAP_PROP_FRAME_HEIGHT))
+fps = int(cap.get(cv2.CAP_PROP_FPS))
+
+fourcc = cv2.VideoWriter_fourcc(*'mp4v')
+out = cv2.VideoWriter('resultado.mp4', fourcc, fps, (frame_width, frame_height))
+
 width, length = 480, 624
 # Valores para la aproximacion de la profundidad. Son estimaciones
 # muy burdas
@@ -91,6 +98,7 @@ while cap.isOpened():
 # Red center point
     
     # Display the frame with ROI
+    out.write(img)
     cv2.imshow('Tracking', img)
     cv2.waitKey(1)
     #cv2.destroyWindow('Frame')
@@ -100,4 +108,5 @@ while cap.isOpened():
         break
 
 cap.release()
+out.release()
 cv2.destroyAllWindows()

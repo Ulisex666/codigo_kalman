@@ -102,7 +102,7 @@ for i, frame in enumerate(imgs_paths):
     #cv2.imwrite(output_path, img)  # Save the image
 
     cv2.imshow(f'Filtro de Kalman frame {i}',img)
-    cv2.waitKey(1000)
+    cv2.waitKey(500)
 
 
 cv2.destroyAllWindows()
