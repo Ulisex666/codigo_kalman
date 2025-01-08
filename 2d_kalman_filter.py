@@ -65,7 +65,7 @@ for frame in imgs_paths:
     # Posicion corregida en verde
     cv2.circle(img, mid_point, 10, (0, 255, 0), 2)  
     
-    # Creamos la ROI sobre la imagen y marcamos el centro
+    # Creamos la ROI  sobre la imagen y marcamos el centro
     cv2.rectangle(img, top_left, bottom_right, (0, 255, 0), 4)
     cv2.drawMarker(img, mid_point, color=[0,255,0], markerType=cv2.MARKER_CROSS,
                 thickness=4, markerSize=50)
