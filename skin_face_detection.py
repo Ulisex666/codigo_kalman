@@ -1,4 +1,5 @@
 import numpy as np
+import cv2 
 from scipy.stats import multivariate_normal
 
 # Medias y covarianza obtenidas de tareas anteriores
@@ -43,9 +44,23 @@ def get_face_roi(img):
     mid_col = (min_col + max_col) // 2
     
     # Empaquetamos los datos para regresarlos
-    top_left = (min_row, min_col)
-    bottom_right = (max_row, max_col)
+    top_left = (min_col, min_row)
+    bottom_right = (max_col, max_row)
     
-    mid_point = (mid_row, mid_col)
+    mid_point = (mid_col, mid_row)
     
     return top_left, bottom_right, mid_point
+
+if __name__ == '__main__':
+       img = cv2.imread('imgs/frame10.jpg')     
+       top_left, bottom_right, mid_point = get_face_roi(img)
+       print(top_left, bottom_right)
+       cv2.rectangle(img, top_left, bottom_right, (0, 255, 0), 4)
+       cv2.drawMarker(img, mid_point, color=[0,255,0], markerType=cv2.MARKER_CROSS,
+                thickness=4, markerSize=50)
+
+       # Se muestra el resultado de la prediccion y la medicion 
+       cv2.imshow(f'Filtro de kalman', img)
+       cv2.waitKey(0)
+
+    
