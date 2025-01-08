@@ -2,9 +2,12 @@ import cv2
 import numpy as np
 from skin_face_detection import get_face_roi
 
-img = cv2.imread('imgs/frame2.jpg')
-height, length = img.shape[0], img.shape[1]
+imgs_paths = ['imgs/frame1.jpg', 'imgs/frame2.jpg', 'imgs/frame3.jpg', 'imgs/frame4.jpg', 
+              'imgs/frame5.jpg', 'imgs/frame6.jpg', 'imgs/frame7.jpg', 'imgs/frame8.jpg',
+              'imgs/frame9.jpg', 'imgs/frame10.jpg', 'imgs/frame11.jpg', 'imgs/frame12.jpg', 
+              'imgs/frame13.jpg', 'imgs/frame14.jpg']
 
+img = imgs_paths[0]
 top_left, bottom_right, mid_point = get_face_roi(img)
 
 # Creamos la ROI sobre la imagen y marcamos el centro
