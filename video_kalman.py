@@ -15,18 +15,20 @@ kalman = cv2.KalmanFilter(6, 3)
 
 # Matriz de transicion. Posicion x_k = x +dx, y_k = y + dy, z_k = z + dz
 # La velocidad se asume constante 
-kalman.transitionMatrix = np.array(
+full_transition_matrix = np.array(
     [[1, 0, 0, 1, 0, 0],
     [0, 1, 0, 0, 1, 0],
-    [0, 0, 1, 0, 0, 1],
+    [0, 0, 1., 0, 0, 1],
     [0, 0, 0, 1, 0, 0],
     [0, 0, 0, 0, 1, 0],
-    [0, 0, 0, 0, 0, 1]], dtype=np.float32)  
+    [0, 0, 0, 0, 0, 1.]], dtype=np.float32) 
+
+kalman.transitionMatrix = np.eye(6, dtype=np.float32)
 
 # Matriz de medida. Solo se nos da informacion de la posicion x, y, z
 kalman.measurementMatrix = np.array([[1, 0, 0, 0, 0, 0],
                                      [0, 1, 0, 0, 0, 0],
-                                     [0, 0, 1, 0, 0, 0]], dtype=np.float32)
+                                     [0, 0, 1., 0, 0, 0]], dtype=np.float32)
 
 
 # Matriz de ruido en el proceso. Se asume poco ruido independiente en
@@ -41,7 +43,7 @@ kalman.errorCovPost = np.eye(6, dtype=np.float32)
 # el centro de la imagen
 # El centro de la imagen (480, 624) es (312, 240). Por sencillez,
 # tomamos profundidad de 1
-initial_state = np.array([320, 240, 1.0, 0, 0, 0], dtype=np.float32)  
+initial_state = np.array([320, 240, 0.0, 0, 0, 0], dtype=np.float32)  
 # Las medida Pre y Post son iguales dado que no se tienen medidas
 kalman.statePost = initial_state
 kalman.statePre = initial_state  
