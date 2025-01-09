@@ -40,7 +40,7 @@ kalman_filter.errorCovPost = np.eye(4, dtype=np.float32)
 
 # Estado inicial del filtro de Kalman. Se asume que la cara esta en 
 # el centro de la imagen
-# El centro de la imagen (480, 624) es (312, 240)
+# El centro de la imagen (624,480) es (312, 240)
 # Las medida Pre y Post son iguales dado que no se tienen medidas
 kalman_filter.statePost = np.array([[312], [240], [0], [0]], dtype=np.float32)
 
@@ -57,7 +57,7 @@ for frame in imgs_paths:
     y_predict = int(prediccion[1])
 
     # Se corrige la prediccion con la medicion obtenida
-    kalman_filter.correct(np.array([mid_point[0], mid_point[1]], dtype=np.float32))
+    kalman_filter.correct(np.array([mid_point[1], mid_point[0]], dtype=np.float32))
     
     # Se muestra la posicion corregida y la predecida
     # Posicion predicha en rojo
@@ -67,8 +67,6 @@ for frame in imgs_paths:
     
     # Creamos la ROI  sobre la imagen y marcamos el centro
     cv2.rectangle(img, top_left, bottom_right, (0, 255, 0), 4)
-    cv2.drawMarker(img, mid_point, color=[0,255,0], markerType=cv2.MARKER_CROSS,
-                thickness=4, markerSize=50)
 
     # Se muestra el resultado de la prediccion y la medicion 
     cv2.imshow(f'Filtro de kalman {frame}', img)

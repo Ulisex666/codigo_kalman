@@ -34,6 +34,7 @@ def get_face_roi(img):
     # Verificamos que probabilidad es mayor para cada pixel
     skin_pixels = np.asarray(img_piel_prob > img_fondo_prob).nonzero()
     
+
     # Obtenemos las coordenadas minimas y maximas para los pixeles 
     # detectados como piel
     min_row, max_row = min(skin_pixels[0]), max(skin_pixels[0])

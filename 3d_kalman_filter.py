@@ -81,7 +81,7 @@ for i, frame in enumerate(imgs_paths):
     z_predict = int(prediccion[2])
 
     # Se corrige la prediccion con la medicion obtenida
-    measurement = np.array([mid_point[0], mid_point[1], Z], dtype=np.float32)
+    measurement = np.array([mid_point[1], mid_point[0], Z], dtype=np.float32)
     kalman.correct(measurement)
 
     # Se dibuja el rostro detectado en la imagen
@@ -89,7 +89,7 @@ for i, frame in enumerate(imgs_paths):
     cv2.drawMarker(img, mid_point, color=[0, 255, 0], markerType=cv2.MARKER_CROSS, thickness=4, markerSize=20)
 
     # Mostrar coordenadas predecidas en la imagen y el marcador
-    cv2.drawMarker(img, (x_predict, y_predict), color=[0, 0, 255], markerType=cv2.MARKER_STAR, thickness=4, markerSize=20)
+    cv2.drawMarker(img, (y_predict, x_predict), color=[0, 0, 255], markerType=cv2.MARKER_STAR, thickness=4, markerSize=20)
     cv2.putText(img, f"Prediccion (x, y, z): ({x_predict}, {y_predict}, {z_predict})", 
                 (mid_point[0] + 10, mid_point[1] - 10), cv2.FONT_HERSHEY_SIMPLEX, 0.5, (0, 0 , 0), 2)
 
@@ -98,7 +98,7 @@ for i, frame in enumerate(imgs_paths):
                 (mid_point[0] + 10, mid_point[1] + 20), cv2.FONT_HERSHEY_SIMPLEX, 0.5, (255, 255, 255  ), 2)
 
     # Guardar los resultados
-    output_path = f'imgs/resultados/frame{i}_result.jpg'  # Path to save the image
+    #output_path = f'imgs/resultados/frame{i}_result.jpg'  # Path to save the image
     #cv2.imwrite(output_path, img)  # Save the image
 
     cv2.imshow(f'Filtro de Kalman frame {i}',img)
