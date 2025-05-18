@@ -37,8 +37,13 @@ def get_face_roi(img):
 
     # Obtenemos las coordenadas minimas y maximas para los pixeles 
     # detectados como piel
-    min_row, max_row = min(skin_pixels[0]), max(skin_pixels[0])
-    min_col, max_col = min(skin_pixels[1]), max(skin_pixels[1])
+    try:
+       min_row, max_row = min(skin_pixels[0]), max(skin_pixels[0])
+       min_col, max_col = min(skin_pixels[1]), max(skin_pixels[1])
+    except ValueError:
+           min_row, max_row, min_col, max_col = (0,0,0,0)
+    
+    
     
     # Se obtiene el centroide de estos pixeles
     mid_row = (min_row + max_row) // 2
